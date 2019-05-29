@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<parameters>
+	<algorithm>3</algorithm>
+	<piecesOfSheets>10</piecesOfSheets>
+	<maxRandomNumber>90</maxRandomNumber>
+</parameters>

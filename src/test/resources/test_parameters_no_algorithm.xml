@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<parameters>
+	<piecesOfSheets>10</piecesOfSheets>
+	<piecesOfRandomNumbers>5</piecesOfRandomNumbers>
+	<maxRandomNumber>90</maxRandomNumber>
+</parameters>

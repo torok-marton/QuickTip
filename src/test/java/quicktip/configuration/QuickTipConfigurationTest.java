@@ -22,6 +22,13 @@ import quicktip.unmarshaller.ParametersUnmarshaller;
 @RunWith(MockitoJUnitRunner.class)
 public class QuickTipConfigurationTest {
 
+    private static final int FIRST_ALGORITHM = 1;
+    private static final int SECOND_ALGORITHM = 2;
+    private static final int THIRD_ALGORITHM = 3;
+    private static final int MAX_RANDOM_NUMBER = 80;
+    private static final int PIECES_OF_RANDOM_NUMBERS = 5;
+    private static final int PIECES_OF_SHEETS = 10;
+
     @Mock
     private ParametersUnmarshaller parametersUnmarshaller;
 
@@ -34,33 +41,24 @@ public class QuickTipConfigurationTest {
 
     @Test
     public void testGetParameters() {
-        int algorithm = 1;
-        int maxRandomNumber = 80;
-        int piecesOfRandomNumbers = 5;
-        int piecesOfSheets = 10;
-
         reset(parametersUnmarshaller);
 
-        Parameters parameters = getParameters(algorithm, maxRandomNumber, piecesOfRandomNumbers, piecesOfSheets);
+        Parameters parameters = getParameters(FIRST_ALGORITHM,MAX_RANDOM_NUMBER, PIECES_OF_RANDOM_NUMBERS, PIECES_OF_SHEETS);
         when(parametersUnmarshaller.unmarshal(null)).thenReturn(parameters);
 
         Parameters result = underTest.getParameters(parametersUnmarshaller);
 
         verify(parametersUnmarshaller, times(1)).unmarshal(null);
         assertThat(result, is(not(nullValue())));
-        assertThat(result.getPiecesOfSheets(), is(piecesOfSheets));
-        assertThat(result.getPiecesOfRandomNumbers(), is(piecesOfRandomNumbers));
-        assertThat(result.getMaxRandomNumber(), is(maxRandomNumber));
-        assertThat(result.getAlgorithm(), is(algorithm));
+        assertThat(result.getPiecesOfSheets(), is(PIECES_OF_SHEETS));
+        assertThat(result.getPiecesOfRandomNumbers(), is(PIECES_OF_RANDOM_NUMBERS));
+        assertThat(result.getMaxRandomNumber(), is(MAX_RANDOM_NUMBER));
+        assertThat(result.getAlgorithm(), is(FIRST_ALGORITHM));
     }
 
     @Test
     public void testGetQuickTip_oneSheetAlgorithm() {
-        int algorithm = 1;
-        int maxRandomNumber = 80;
-        int piecesOfRandomNumbers = 5;
-
-        Parameters parameters = getParameters(algorithm, maxRandomNumber, piecesOfRandomNumbers, 0);
+        Parameters parameters = getParameters(FIRST_ALGORITHM,MAX_RANDOM_NUMBER, PIECES_OF_RANDOM_NUMBERS, 0);
 
         QuickTip quickTip = underTest.getQuickTip(parameters);
 
@@ -69,11 +67,7 @@ public class QuickTipConfigurationTest {
 
     @Test
     public void testGetQuickTip_fixedIntervalAlgorithm() {
-        int algorithm = 2;
-        int piecesOfRandomNumbers = 5;
-        int piecesOfSheets = 10;
-
-        Parameters parameters = getParameters(algorithm, 0, piecesOfRandomNumbers, piecesOfSheets);
+        Parameters parameters = getParameters(SECOND_ALGORITHM, 0, PIECES_OF_RANDOM_NUMBERS, PIECES_OF_SHEETS);
 
         QuickTip quickTip = underTest.getQuickTip(parameters);
 
@@ -82,12 +76,7 @@ public class QuickTipConfigurationTest {
 
     @Test
     public void testGetQuickTip_configuredAlgorithm() {
-        int algorithm = 3;
-        int maxRandomNumber = 80;
-        int piecesOfRandomNumbers = 5;
-        int piecesOfSheets = 10;
-
-        Parameters parameters = getParameters(algorithm, maxRandomNumber, piecesOfRandomNumbers, piecesOfSheets);
+        Parameters parameters = getParameters(THIRD_ALGORITHM, MAX_RANDOM_NUMBER, PIECES_OF_RANDOM_NUMBERS, PIECES_OF_SHEETS);
 
         QuickTip quickTip = underTest.getQuickTip(parameters);
 

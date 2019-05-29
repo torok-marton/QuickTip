@@ -17,32 +17,32 @@ import quicktip.bean.response.ConfiguredQuickTipResponse;
 @RunWith(JUnit4.class)
 public class ConfiguredQuickTipTest {
 
+    private static final int MAX_RANDOM_NUMBER = 80;
+    private static final int PIECES_OF_SHEETS = 4;
+    private static final int PIECES_OF_RANDOM_NUMBERS = 10;
+    private static final int LOW_PIECES_OF_SHEETS = -1;
     private QuickTip underTest;
 
     @Test
     public void testConfiguredQuickTip() {
-        int maxRandomNumber = 80;
-        int piecesOfSheets = 4;
-        int piecesOfRandomNumbers = 10;
-
-        ConfiguredQuickTipInput input = getConfiguredQuickTipInput(maxRandomNumber, piecesOfSheets, piecesOfRandomNumbers);
+        ConfiguredQuickTipInput input = getConfiguredQuickTipInput(MAX_RANDOM_NUMBER, PIECES_OF_SHEETS, PIECES_OF_RANDOM_NUMBERS);
         underTest = new ConfiguredQuickTip(input);
 
         ConfiguredQuickTipResponse response = (ConfiguredQuickTipResponse) underTest.generateRandomNumbers();
 
         assertThat(response, is(not(nullValue())));
         assertThat(response.getFilledSheets(), is(not(empty())));
-        assertThat(response.getFilledSheets().size(), is(piecesOfSheets));
+        assertThat(response.getFilledSheets().size(), is(PIECES_OF_SHEETS));
         assertThat(response.getFilledSheets().get(0).getNumbers(), is(not(empty())));
-        assertThat(response.getFilledSheets().get(0).getNumbers().size(), is(piecesOfRandomNumbers));
+        assertThat(response.getFilledSheets().get(0).getNumbers().size(), is(PIECES_OF_RANDOM_NUMBERS));
         for (Integer i : response.getFilledSheets().get(0).getNumbers()) {
-            assertThat(i, is(not(greaterThan(maxRandomNumber))));
+            assertThat(i, is(not(greaterThan(MAX_RANDOM_NUMBER))));
         }
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testConfiguredQuickTip__LowSheetNumber() {
-        ConfiguredQuickTipInput input = getConfiguredQuickTipInput(80, -1, 10);
+        ConfiguredQuickTipInput input = getConfiguredQuickTipInput(MAX_RANDOM_NUMBER, LOW_PIECES_OF_SHEETS, PIECES_OF_RANDOM_NUMBERS);
         underTest = new ConfiguredQuickTip(input);
 
         underTest.generateRandomNumbers();

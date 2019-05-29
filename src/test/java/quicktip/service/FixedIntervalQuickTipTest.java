@@ -17,23 +17,23 @@ import quicktip.bean.response.FixedIntervalQuickTipResponse;
 public class FixedIntervalQuickTipTest {
 
     private static final int MAX_RANDOM_NUMBER = 90;
+    private static final int PIECES_OF_RANDOM_NUMBERS = 5;
+    private static final int PIECES_OF_SHEETS = 10;
+    private static final int LOW_PIECES_OF_SHEETS = -1;
     private QuickTip underTest;
 
     @Test
     public void testFixedIntervalQuickTip() {
-        int piecesOfRandomNumbers = 5;
-        int piecesOfSheets = 10;
-
-        FixedIntervalQuickTipInput input = getFixedIntervalQuickTipInput(piecesOfRandomNumbers, piecesOfSheets);
+        FixedIntervalQuickTipInput input = getFixedIntervalQuickTipInput(PIECES_OF_RANDOM_NUMBERS, PIECES_OF_SHEETS);
         underTest = new FixedIntervalQuickTip(input);
 
         FixedIntervalQuickTipResponse response = (FixedIntervalQuickTipResponse) underTest.generateRandomNumbers();
 
         assertThat(response, is(not(nullValue())));
         assertThat(response.getFilledSheets(), is(not(empty())));
-        assertThat(response.getFilledSheets().size(), is(piecesOfSheets));
+        assertThat(response.getFilledSheets().size(), is(PIECES_OF_SHEETS));
         assertThat(response.getFilledSheets().get(0).getNumbers(), is(not(empty())));
-        assertThat(response.getFilledSheets().get(0).getNumbers().size(), is(piecesOfRandomNumbers));
+        assertThat(response.getFilledSheets().get(0).getNumbers().size(), is(PIECES_OF_RANDOM_NUMBERS));
         for (Integer i : response.getFilledSheets().get(0).getNumbers()) {
             assertThat(i, is(not(greaterThan(MAX_RANDOM_NUMBER))));
         }
@@ -41,7 +41,7 @@ public class FixedIntervalQuickTipTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testFixedIntervalQuickTip_LowSheetNumber() {
-        FixedIntervalQuickTipInput input = getFixedIntervalQuickTipInput(5, -1);
+        FixedIntervalQuickTipInput input = getFixedIntervalQuickTipInput(PIECES_OF_RANDOM_NUMBERS, LOW_PIECES_OF_SHEETS);
         underTest = new FixedIntervalQuickTip(input);
 
         underTest.generateRandomNumbers();

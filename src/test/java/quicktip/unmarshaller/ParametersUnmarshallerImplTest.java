@@ -25,6 +25,10 @@ public class ParametersUnmarshallerImplTest {
     private static final String TEST_PARAMETERS_THIRD_ALGORITHM_NO_PIECES_OF_SHEETS = RESOURCES_PATH + "test_parameters_third_algorithm_no_pieces_of_sheets.xml";
     private static final String TEST_PARAMETERS_THIRD_ALGORITHM_NO_MAX_NUMBER = RESOURCES_PATH + "test_parameters_third_algorithm_no_max_number.xml";
     private static final String TEST_PARAMETERS_WRONG_ALGORITHM = RESOURCES_PATH + "test_parameters_wrong_algorithm.xml";
+    private static final int ALGORITHM = 3;
+    private static final int MAX_RANDOM_NUMBER = 90;
+    private static final int PIECES_OF_RANDOM_NUMBERS = 5;
+    private static final int PIECES_OF_SHEETS = 10;
 
     private ParametersUnmarshaller underTest;
 
@@ -39,10 +43,10 @@ public class ParametersUnmarshallerImplTest {
 
         assertThat(parameters, is(not(nullValue())));
         assertThat(parameters.getAlgorithm(), is(not(nullValue())));
-        assertThat(parameters.getAlgorithm(), is(3));
-        assertThat(parameters.getMaxRandomNumber(), is(90));
-        assertThat(parameters.getPiecesOfRandomNumbers(), is(5));
-        assertThat(parameters.getPiecesOfSheets(), is(10));
+        assertThat(parameters.getAlgorithm(), is(ALGORITHM));
+        assertThat(parameters.getMaxRandomNumber(), is(MAX_RANDOM_NUMBER));
+        assertThat(parameters.getPiecesOfRandomNumbers(), is(PIECES_OF_RANDOM_NUMBERS));
+        assertThat(parameters.getPiecesOfSheets(), is(PIECES_OF_SHEETS));
     }
 
     @Test(expected = IllegalArgumentException.class)
